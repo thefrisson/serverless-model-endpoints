@@ -1,0 +1,56 @@
+parameters: {}
+environment: {
+  ENV: production,
+  LOG_DESTINATIONS: ${LOG_DESTINATIONS}
+
+}
+packages:
+    - name: v1
+      shared: false
+      environment: {
+        DATABASE_URL: "${DATABASE_URL}",
+        JWT_SECRET_KEY: ${JWT_SECRET_KEY},
+        OPENAI_API_KEY: "${OPENAI_API_KEY}",
+        STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY}",
+        AIAGENT_PRODUCT_ID: ${AIAGENT_PRODUCT_ID},
+        ACTIVE_STATUS: ${ACTIVE_STATUS}
+      }
+      parameters: {}
+      annotations: {}
+      functions:
+        - name: solutions
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: runs
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: threads
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: vector_stores
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
