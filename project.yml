@@ -27,7 +27,7 @@ packages:
           environment: {}
           annotations: {}
           limits: {}
-        - name: runs
+        - name: users_solutions
           binary: false
           main: ""
           runtime: python:default
@@ -36,7 +36,7 @@ packages:
           environment: {}
           annotations: {}
           limits: {}
-        - name: threads
+        - name: teams_solutions
           binary: false
           main: ""
           runtime: python:default
