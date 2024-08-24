@@ -1,4 +1,4 @@
-from context.context import secured_user
+from context.context import secured_user, path_to_list, is_valid_uuid
 from crud.c import create_solution
 from crud.r import list_solutions, retrieve_solution
 from crud.u import update_solution
@@ -6,9 +6,10 @@ from crud.d import delete_solution
 
 
 def main(event):
-
     method = event['http']['method']
     print(method)
+    path_list = path_to_list(event['http']['path'])
+    
     
     if method == "OPTIONS":
         print("options request")
@@ -22,10 +23,10 @@ def main(event):
     if method == "GET":
         user_type, user = secured_user(event)
         if not isinstance(user, dict):
-            if 'id' in event:
-                public_id = event['id']
-                assistant_type = event.get('assistant', user_type if user_type != "system_admin" else "system")
-                endpoint = retrieve_solution(user, user_type, assistant_type, public_id=public_id)
+            if len(path_list) > 0:
+                public_id = path_list[0]
+    
+                endpoint = retrieve_solution(user, user_type, public_id=public_id)
                 return {
                     "body": endpoint, 
                     "statusCode": endpoint['statusCode'], 
@@ -34,8 +35,8 @@ def main(event):
                     }
                 }
             else:
-                assistant_type = event.get('assistant', user_type if user_type != "system_admin" else "system")
-                endpoint = list_solutions(user, user_type, assistant_type)
+    
+                endpoint = list_solutions(user, user_type)
 
                 return {
                     "body": endpoint, 
@@ -57,9 +58,7 @@ def main(event):
     elif method == "POST":
         user_type, user = secured_user(event)
         if not isinstance(user, dict):
-            assistant_type = event.get('assistant', user_type if user_type != "system_admin" else "system")
-            print("assistant ", assistant_type)
-            endpoint = create_solution(event, user, user_type, assistant_type)
+            endpoint = create_solution(event, user, user_type)
             return {
                 "body": endpoint, 
                 "statusCode": endpoint['statusCode'], 
@@ -78,8 +77,7 @@ def main(event):
             }
         
     elif method == "PUT":
-        public_id = event.get('id', None)
-        if public_id is None:
+        if not path_list or not is_valid_uuid(path_list[0]):
             return {
                 'body': "Method requires id",
                 "statusCode": 401, 
@@ -87,10 +85,11 @@ def main(event):
                     'Access-Control-Allow-Credentials': 'true',
                 }
             }
-        
+
+        public_id = path_list[0]
         user_type, user = secured_user(event)
         if not isinstance(user, dict):
-            assistant_type = event.get('assistant', user_type if user_type != "system_admin" else "system")
+
             endpoint = update_solution(user, user_type)
             return {
                 "body": endpoint, 
@@ -101,8 +100,7 @@ def main(event):
             }
         
     elif method == "DELETE":
-        public_id = event.get('id', None)
-        if public_id is None:
+        if not path_list or not is_valid_uuid(path_list[0]):
             return {
                 'body': "Method requires id",
                 "statusCode": 401, 
@@ -110,10 +108,11 @@ def main(event):
                     'Access-Control-Allow-Credentials': 'true',
                 }
             }
-        
+
+        public_id = path_list[0]
         user_type, user = secured_user(event)
         if not isinstance(user, dict):
-            assistant_type = event.get('assistant', user_type if user_type != "system_admin" else "system")
+
             endpoint = delete_solution(user, user_type)
             return {
                 "body": endpoint, 

@@ -2,9 +2,9 @@
 import jwt
 import os
 import uuid
-from datetime import datetime
+from datetime import datetime as dt, date, time
 from sqlalchemy import Table, MetaData, create_engine, insert, update, delete, desc
-from sqlalchemy.engine import ResultProxy
+from sqlalchemy.engine import Row, ResultProxy 
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -61,14 +61,58 @@ def secured_user(event):
         return 401, {'statusCode': 401, 'body': f'db probably isnt connected well. {str(e)}'}
 
 
+def path_to_list(path):
+    """
+    Convert a path string into a list of segments, removing the leading slash.
+    
+    Parameters:
+    path (str): The path string to be converted.
+
+    Returns:
+    list: A list of segments from the path.
+    """
+    # Remove the leading slash if it exists
+    if path.startswith('/'):
+        path = path[1:]
+    
+    # Split the path by slashes and return the resulting list
+    return path.split('/')
+
+
+def is_valid_uuid(s):
+    try:
+        uuid.UUID(s, version=4)
+        return True
+    except ValueError:
+        return False
 
 def row_to_dict(row):
     """
     Convert a SQLAlchemy Row object to a dictionary.
+    Handles SQLAlchemy engine Row objects specifically and
+    converts non-serializable types like datetime to strings.
     """
     if row is None:
         return None
-    return {key: row[key] for key in row.keys()}
+    
+    def convert_value(value):
+        if isinstance(value, dt):
+            return value.isoformat()  # Convert datetime to ISO format string
+        elif isinstance(value, date):
+            return value.isoformat()  # Convert date to ISO format string
+        elif isinstance(value, time):
+            return value.isoformat()  # Convert time to ISO format string
+        # Add more conversions here if needed
+        return value
+    
+    # Handle SQLAlchemy Row objects
+    if isinstance(row, Row):
+        return {key: convert_value(getattr(row, key)) for key in row._fields}
+    
+    # Fallback for dictionary-like rows
+    return {key: convert_value(row[key]) for key in row.keys()}
+
+
 
 def safe_getattr(obj, attr, default=None):
     """
@@ -95,11 +139,12 @@ def safe_getattr(obj, attr, default=None):
         # Handle regular objects with dot notation
         return getattr(obj, attr, default)
     
-    except (AttributeError, KeyError, TypeError):
+    except Exception as e:
+        print(f"Error: {attr} is not an available attribute of the {type(obj)} object passed. Default of type {type(default)} returned. Details: {e}")
         return default
 
 
-def select_from_table(table_name, user=None, user_type=None, return_type="all", filters=None):
+def select_from_table(table_name, user=None, user_type=None, filters=None, return_type="all"):
     try:
         # Start with a basic SELECT statement
         query_string = f"SELECT * FROM {table_name} WHERE 1=1"
@@ -163,10 +208,10 @@ def insert_into_table(table_name, generate_uuid_list, parameters):
             parameters['public_id'] = str(uuid.uuid4())
 
         if 'created_timestamp' in columns and 'created_timestamp' not in parameters:
-            parameters['created_timestamp'] = datetime.utcnow()
+            parameters['created_timestamp'] = dt.utcnow()
 
         if 'last_updated_timestamp' in columns and 'last_updated_timestamp' not in parameters:
-            parameters['last_updated_timestamp'] = datetime.utcnow()
+            parameters['last_updated_timestamp'] = dt.utcnow()
 
         if 'status' in columns and 'status' not in parameters:
             parameters['status'] = os.environ.get('ACTIVE_STATUS')
@@ -273,7 +318,7 @@ def check_for_error(sql_result):
     
 
 def default_converter(o):
-    if isinstance(o, datetime):
+    if isinstance(o, dt):
         return o.isoformat()
     return o
 
@@ -315,4 +360,4 @@ def close_session(session):
 
 session = get_session()
 
-print(0.1)
+
