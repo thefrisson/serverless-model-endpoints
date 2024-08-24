@@ -76,7 +76,8 @@ def path_to_list(path):
         path = path[1:]
     
     # Split the path by slashes and return the resulting list
-    return path.split('/')
+    path_list = path.split('/')
+    return [entry for entry in path_list if entry]
 
 
 def is_valid_uuid(s):
