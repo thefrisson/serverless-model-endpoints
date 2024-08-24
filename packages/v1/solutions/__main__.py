@@ -24,6 +24,7 @@ def main(event):
         user_type, user = secured_user(event)
         if not isinstance(user, dict):
             if len(path_list) > 0:
+                print('path_list', path_list)
                 public_id = path_list[0]
     
                 endpoint = retrieve_solution(user, user_type, public_id=public_id)
