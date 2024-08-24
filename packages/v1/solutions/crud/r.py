@@ -5,7 +5,7 @@ def list_solutions(user, user_type):
         try:
             table_name = f"{user_type}_passports_solutions"
             raw_list = select_from_table(table_name, filters={'passport_id': safe_getattr(user, 'selected_team')}, return_type="all")
-
+            print(raw_list)
             solution_list = []
             for solution_link in raw_list:
                 print('solution: ', safe_getattr(solution_link, 'solution_id'))
