@@ -8,6 +8,7 @@ def list_solutions(user, user_type):
 
             solution_list = []
             for solution_link in raw_list:
+                print('solution: ', safe_getattr(solution_link, 'solution_id'))
                 solution = row_to_dict(select_from_table('solution', filters={'solution_id': safe_getattr(solution_link, 'solution_id')}, return_type="first_or_404"))
                 solution_list.append(solution)
 
