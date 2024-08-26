@@ -13,8 +13,6 @@ def list_solutions(user, user_type):
                     solution = row_to_dict(select_from_table('solution', filters={'solution_id': safe_getattr(solution_link, 'solution_id')}, return_type="first_or_404"))
                     solution_list.append(solution)
 
-
-  
             else:
                 if raw_list['statusCode'] != 404:
                     return raw_list
@@ -23,7 +21,7 @@ def list_solutions(user, user_type):
             # Ensure fetching results first
             return formatted_results
         except Exception as e:
-            print("Listing AI Agents failed:", str(e))
+            print("Listing Solutions failed:", str(e))
             return {"body": "Internal Server Error", "statusCode": 500}
     else:
         return {"body": "Unauthorized or invalid user type", "statusCode": 401}
@@ -40,7 +38,7 @@ def retrieve_solution(user, user_type, public_id):
             # Ensure fetching results first
             return formatted_result
         except Exception as e:
-            print("Listing AI Agents failed:", str(e))
+            print("Retrieving failed:", str(e))
             return {"body": "Internal Server Error", "statusCode": 500}
     else:
         return {"body": "Unauthorized or invalid user type", "statusCode": 401}
