@@ -70,7 +70,7 @@ def create_solution(event, user, user_type):
                     f'{user_type}_id': safe_getattr(user, f'{user_type}_id'),
                     'solution_id': safe_getattr(new_solution, 'solution_id')
                 })
-                new_solution_team_link = insert_into_table('solutions', ['public_id'], {
+                new_solution_team_link = insert_into_table(f'{user_type}_passports_solutions', ['public_id'], {
                     'passport_id': safe_getattr(stripe_passport, f'{user_type}_passport_id'),
                     'solution_id': safe_getattr(new_solution, 'solution_id')
                 })
