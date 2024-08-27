@@ -27,20 +27,23 @@ def create_solution(event, user, user_type):
             description = body_dict.get('description', None)
             url = body_dict.get('url', None)
             role = body_dict.get('role', None)
-
+            
+            print(4)
+            
             if any(var is None for var in [title, type, description, url, role]):
                 return {
                     "error": "Incorrect Parameters",
                     "statusCode": 400,
                 } 
             else:
+                print(5)
                 cloudinary.config( 
                     cloud_name = os.environ.get(['CLOUDINARY_CLOUD_NAME']), 
                     api_key = os.environ.get(['CLOUDINARY_API_KEY']), 
                     api_secret = os.environ.get(['CLOUDINARY_API_SECRET'])
                 )
                 
-                print(4)
+                print(6)
 
                 # Existing logic for creating an AI assistant when assistant_type == "customer"
                 stripe_passport = select_from_table(f'{user_type}_stripe_passport', filters={f'{user_type}_passport_id': safe_getattr(user, 'selected_team')}, return_type="first_or_404")
