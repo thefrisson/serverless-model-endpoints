@@ -54,7 +54,7 @@ def create_solution(event, user, user_type):
 
                 print("all objects selected")
 
-                new_solution = insert_into_table('solution', ['solution_id'],
+                new_solution = insert_into_table('solution', ['solution_id', 'display_id'],
                     {
                         'title': title,
                         'type': type,
