@@ -59,7 +59,8 @@ def create_solution(event, user, user_type):
                         'title': title,
                         'type': type,
                         'description': description,
-                        'url': url 
+                        'url': url,
+                        'log_json': json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': f"was created"}])
                     }                        
                 )
                 print("new_solution: ", new_solution)
