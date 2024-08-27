@@ -62,6 +62,7 @@ def create_solution(event, user, user_type):
                         'url': url 
                     }                        
                 )
+                print("new_solution: ", new_solution)
 
                 new_solution_user_link = insert_into_table(f'{user_type}s_solutions', ['public_id'], {
                     f'{user_type}_id': safe_getattr(user, f'{user_type}_id'),
