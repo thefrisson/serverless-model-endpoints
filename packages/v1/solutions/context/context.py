@@ -1,4 +1,4 @@
-
+import json
 import jwt
 import os
 import uuid
@@ -205,6 +205,9 @@ def insert_into_table(table_name, generate_uuid_list, parameters):
             parameters[uuid_key] = str(uuid.uuid4())
 
         # Check for specific columns and add default values if they are missing
+        if 'log_json' in columns and 'log_json' not in parameters:
+            parameters['log_json'] = json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': f"was created"}])
+        
         if 'public_id' in columns and 'public_id' not in parameters:
             parameters['public_id'] = str(uuid.uuid4())
 
