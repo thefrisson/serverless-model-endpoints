@@ -12,15 +12,16 @@ from context.context import select_from_table, insert_into_table, safe_getattr
 def create_solution(event, user, user_type):
     try:
         body_str = event.get('http', {}).get('body', "{}")
+        print(1)
         body_dict = json.loads(body_str)
-
+        print(2)
         if user_type not in ['customer', 'admin', 'system_admin']:
             return {
                 "error": "Incorrect user type",
                 "statusCode": 400,
             }
         else:
-
+            print(3)
             title = body_dict.get('title', None)
             type = body_dict.get('type', None)
             description = body_dict.get('description', None)
@@ -39,7 +40,7 @@ def create_solution(event, user, user_type):
                     api_secret = os.environ.get(['CLOUDINARY_API_SECRET'])
                 )
                 
-                
+                print(4)
 
                 # Existing logic for creating an AI assistant when assistant_type == "customer"
                 stripe_passport = select_from_table(f'{user_type}_stripe_passport', filters={f'{user_type}_passport_id': safe_getattr(user, 'selected_team')}, return_type="first_or_404")
