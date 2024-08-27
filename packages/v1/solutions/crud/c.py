@@ -9,7 +9,7 @@ import time as t
 from context.context import select_from_table, insert_into_table, safe_getattr
 
 
-def create_solution(event, user, user_type, assistant_type):
+def create_solution(event, user, user_type):
     try:
         body_str = event.get('http', {}).get('body', "{}")
         body_dict = json.loads(body_str)
