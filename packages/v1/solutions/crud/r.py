@@ -3,9 +3,10 @@ from context.context import select_from_table, safe_getattr, row_to_dict
 def list_solutions(user, user_type):
     if user_type in ['customer', 'admin', 'affiliate', 'system_admin', 'end_user']:
         try:
-            table_name = f"{user_type}_passports_solutions"
-            raw_list = select_from_table(table_name, filters={'passport_id': safe_getattr(user, 'selected_team')}, return_type="all")
+            table_name = f"{user_type}s_solutions"
+            raw_list = select_from_table(table_name, user=user, user_type=user_type, return_type="all")
             solution_list = []
+            print(raw_list)
             if not isinstance(raw_list, dict):
             
                 for solution_link in raw_list:
