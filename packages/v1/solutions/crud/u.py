@@ -2,8 +2,8 @@ import cloudinary
 import cloudinary.uploader
 import os
 from context.context import session, update_table
-def update_solution(event, user, user_type):
-    if user_type in ['admin', 'system_admin']:  # Assuming only admins can update
+def update_solution(event, user, user_type, public_id):
+    if user_type in ['admin', 'system_admin', 'customer']:
         try:
             headers = event.get('http', {}).get('headers', {})
             content_type = headers.get('content-type', None)
@@ -20,7 +20,7 @@ def update_solution(event, user, user_type):
                     # Don't forget to add the passport_id back into the folder name for cloudinary upload.
                     cdn_response = cloudinary.uploader.upload(image, folder=f'customer_teams/solutions')
                     update_dict = {'cover_image_url': cdn_response['secure_url']}
-                updated_solution = update_table("solution", 'public_id', "ff6cb38a-8e34-4efa-b829-5f82039e51bd", update_dict)
+                updated_solution = update_table("solution", 'public_id', public_id, update_dict)
 
                 return {"body": {"message": "Solution updated successfully", "agent": ""}, "statusCode": 200}
             else:
