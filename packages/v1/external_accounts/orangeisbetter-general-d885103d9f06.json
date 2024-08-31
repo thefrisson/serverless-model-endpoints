@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "orangeisbetter-general",
+  "private_key_id": "d885103d9f06e09a8311be719f00aa31d5a3c6fb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCopguky5AMroHE\n4iEvo7Zc8o+D/D2j3uivesq74qzhfwsWrQ3WwrJv40UKhjUJPnySi8W4AKZoUTlp\n+xVhnNXWF+dIjhHoqd2eUkpoSMXMrjTIJP+YIH0hgR3ekF5DcDrTxeJzB1rNg+vq\n/BVI6N4V6dNr9MqBFAtC94atOWsf6vysLHqE2FFaEDOdT2/REt2SYhRtkT4jw+r5\ntGm0UGM1fM/trnmukUNuyTAx/aSSxB6aedmHBqE9jNZeTVTNsunh45r1kz7Rq5+T\n9HRTHYnCWAf63voHglV3cmnAA5GvYrurL78aouw+bqmthTl75FwvNQdqIh5E8DsG\nOB6xrMZVAgMBAAECggEAFbX2jBsBQC4GRQcgDZF49w3qMta58ArQuqfHSe5m93U9\nmLLjiVuxe/JD35R3vGkVFrU0BA7gB/rji29diR5Bxa4jF0s5e/xuLCUHhir5fR2K\nFvVIYC2tM4R7M2feHWFpI/0hZ1HcOyvPUbDCZAtHwoYXsm9Q0ygg663mN7j2FPrG\nOTstoG0sPTPIcjBWbGMBc+qRGVuww62nU5kwI7hdth5QdCEG+8jteqtdY+95rwnJ\nCz4Y1hVI210p91ElhM+psbRF6pXPFJzOafGY/FHNmWLkjqUKMk2ETiLd8QtCvVtR\nzOKHxb9y7xVNZqnw+Z8tphUdxDEa+oaq2Jwpn90NGwKBgQDeI5Vn1ivkcHIyeCRm\noaw0gCsori+TrRKAAZpwWx0UZari36e2TxgvFEFHxbyi4CIm4pvtCQ0VN+se7JqC\n7hbrL4Kgu/FZyNrIrLCFHzsBXtcASZR51JF7595npIBO/ar7hzFOX/ctgU1Gj9hq\nC+9JF/yaYWBoeSjafWkQ5Mg+1wKBgQDCWyJP1KdwZ+O2nPl0875WNNcsMt0fkmiv\naRqaoAA7eTwve5Ie6KG3VCiT++W5zerLMu3oPRPHydW5jbZA6lxIxgMGwENcU2hf\nTvUn1zVL0B9h6q6fbpGYKq/i21Nn5Xnv0t3WQQIm2aVTHbHrPWan6Sv1n+ZVjb96\nAQ2noREaswKBgQCM4cxzmmUj8By83W1Ymdh5Q4AbwLzzz6QYAuxLrb13njMOyAG5\nodgYo6PzPPkx4yxFtRpm7oKZnmlDp5MmzpFCf1M9VXTwGG6JLtyU0QW/DMMWr5O2\n4JWUG6311WJ6tm6mL0uaBUriVUsJIVmDiCYuGURfNLrMB2tdhoQH7tEA6QKBgQCP\nbw59d+UyUZl+NY7sPs4jdM+vsMH8AOL9QUX/A0HoompGaJ3H7csbLyLbQ7WgUFWN\nLMLi9+BXO59dVzY/5jXBB1FIdC/CPVPzsqO+iVat4qSmcLn6s3EDqc0wUMjXDkXV\nNfu9mTBrV4hpNKsPfrr6BF0K4rzsOrYq5ggbxASJfQKBgD3DkwNy5za2c0TMzd2U\nEIXEraIOrxsXF5UumoRXqUHTHFGZhEo2Ul/SmFWGPc0KYj8r/3+RTR5t8Z3NBzw5\nNlsxehAjmSBLJCq1oD3VeNrHPGTRDeWVEsDamLiJL60e3NWWx7VDAD3rriDr/fm7\nFbmnMMqy9Xled6kSp8C7AQPx\n-----END PRIVATE KEY-----\n",
+  "client_email": "secret-service@orangeisbetter-general.iam.gserviceaccount.com",
+  "client_id": "103533237737580477413",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/secret-service%40orangeisbetter-general.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

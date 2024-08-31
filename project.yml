@@ -21,7 +21,36 @@ packages:
       parameters: {}
       annotations: {}
       functions:
+        - name: external_accounts
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {
+            GOOGLE_APPLICATION_CREDENTIALS_JSON: ${GOOGLE_APPLICATION_CREDENTIALS_JSON}
+          }
+          annotations: {}
+          limits: {}
         - name: solutions
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: solution_groups
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: solution_templates
           binary: false
           main: ""
           runtime: python:default
@@ -49,6 +78,24 @@ packages:
           annotations: {}
           limits: {}
         - name: vector_stores
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: workflows
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: workflow_templates
           binary: false
           main: ""
           runtime: python:default
