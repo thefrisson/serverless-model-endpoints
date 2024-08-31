@@ -28,8 +28,7 @@ packages:
           web: true
           parameters: {}
           environment: {
-            GOOGLE_APPLICATION_CREDENTIALS_JSON: ${GOOGLE_APPLICATION_CREDENTIALS_JSON}
-          }
+            GOOGLE_APPLICATION_CREDENTIALS_JSON: "${GOOGLE_APPLICATION_CREDENTIALS_JSON}"          }
           annotations: {}
           limits: {}
         - name: solutions
