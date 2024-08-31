@@ -21,6 +21,15 @@ packages:
       parameters: {}
       annotations: {}
       functions:
+        - name: explore_groups
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
         - name: external_accounts
           binary: false
           main: ""
