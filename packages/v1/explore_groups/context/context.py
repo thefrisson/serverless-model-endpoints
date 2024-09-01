@@ -217,8 +217,10 @@ def insert_into_table(table_name, generate_uuid_list, parameters):
             if col in columns and col not in parameters:
                 parameters[col] = default_values[col]
 
+        ignore_columns = {'id'}
         # Ensure all columns required by the table schema are included
-        missing_columns = columns - parameters.keys()
+        missing_columns = columns - parameters.keys() - ignore_columns
+        
         if missing_columns:
             raise ValueError(f"Missing required columns: {missing_columns}")
 
