@@ -91,8 +91,8 @@ def main(event):
                 user_type, user = secured_user(event)
                 if not isinstance(user, dict):
                     print("event: ", event)
-                    
-                    body_str = event.get('body', "{}")
+
+                    body_str = event.get('http', "{}")
                     body_dict = json.loads(body_str)
                     
                     endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, body_dict)
