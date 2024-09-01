@@ -195,12 +195,13 @@ def select_from_table(table_name, user=None, user_type=None, filters=None, retur
 
 def insert_into_table(table_name, generate_uuid_list, parameters):
     try:
+        # Load the table metadata dynamically
         table = Table(table_name, metadata, autoload_with=engine)
 
-        # Retrieve column names from the table
+        # Retrieve valid column names from the table
         columns = {column.name for column in table.columns}
 
-        # Ensure all required columns are provided
+        # Generate UUIDs for specified columns
         for uuid_key in generate_uuid_list:
             parameters[uuid_key] = str(uuid.uuid4())
 
@@ -217,18 +218,21 @@ def insert_into_table(table_name, generate_uuid_list, parameters):
             if col in columns and col not in parameters:
                 parameters[col] = default_values[col]
 
-        ignore_columns = {'id'}
-        # Ensure all columns required by the table schema are included
-        missing_columns = columns - parameters.keys() - ignore_columns
-        
-        if missing_columns:
-            raise ValueError(f"Missing required columns: {missing_columns}")
+        # Filter parameters to keep only valid columns for insertion
+        valid_parameters = {k: v for k, v in parameters.items() if k in columns}
+
+        # Identify any unconsumed columns (if any)
+        unconsumed_columns = set(parameters.keys()) - set(valid_parameters.keys())
+        if unconsumed_columns:
+            print(f"Unconsumed column names: {', '.join(unconsumed_columns)}")
+            raise ValueError(f"Unconsumed column names: {', '.join(unconsumed_columns)}")
 
         # Perform the insert operation
-        insert_stmt = insert(table).values(**parameters)
+        insert_stmt = insert(table).values(**valid_parameters)
         result = session.execute(insert_stmt)
         session.commit()
 
+        # Retrieve the primary key value of the inserted row
         primary_key_value = result.inserted_primary_key[0]
         select_stmt = text(f"SELECT * FROM {table_name} WHERE id = :pk")
         inserted_row = session.execute(select_stmt, {'pk': primary_key_value}).fetchone()
@@ -239,7 +243,6 @@ def insert_into_table(table_name, generate_uuid_list, parameters):
         session.rollback()
         print(e)
         return {'body': f"Failed to insert into {table_name}: {str(e)}", 'statusCode': 400}
-
 
 def update_table(table_name, key_column, key_value, update_data):
     try:
