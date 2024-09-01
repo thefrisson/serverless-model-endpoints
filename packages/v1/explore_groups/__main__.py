@@ -17,15 +17,19 @@ def main(event):
     
     group_type = None
     object_user_type = None
+    object_user_id = None
     public_id = None
 
     group_type = path_list[0]
     if group_type in ['solution_templates', 'external_account_types']:
         object_user_type = path_list[1]
-        if object_user_type in ['system', 'admin', 'customer']:
+        if object_user_type in ['system', 'admin', 'customer'] and f"{object_user_type}_id" in event:
+            object_user_id = event.get(f'{object_user_type}_id', None)
             is_valid_request = True
             if len(path_list) == 3:
                 public_id = path_list[2]
+        else:
+            print(event.keys())
 
         
     print("Valid Request: ", is_valid_request)
