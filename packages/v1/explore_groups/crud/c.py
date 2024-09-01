@@ -93,11 +93,9 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
         else:
             print(body_dict)
             object_user_id = body_dict.get(f'{object_user_type if object_user_type != "system" else "system_admin"}_id', None)
-            title = body_dict.get('title', None)
-            description = body_dict.get('description', None)
 
             
-            if any(var is None for var in [object_user_id, title, description]):
+            if any(var is None for var in [object_user_id]):
                 print("body dictionary keys: ", body_dict.keys())
                 return {
                     "error": "Incorrect Parameters",
@@ -126,8 +124,6 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
                 new_explore_group = insert_into_table(f'{object_user_type}_solution_template_explore_group', [f'{object_user_type}_solution_template_explore_group_id'],
                     {
                         object_user_type_key: object_user_id,
-                        'title': title,
-                        'description': description,
                     }                        
                 )
                 print("new explore group: ", new_explore_group)
