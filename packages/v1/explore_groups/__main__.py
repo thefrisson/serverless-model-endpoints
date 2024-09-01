@@ -1,5 +1,6 @@
+import json
 from context.context import secured_user, path_to_list, is_valid_uuid
-from crud.c import create_solution
+from crud.c import create_solution_template_explore_groups
 from crud.r import list_solutions, list_solution_template_explore_groups
 from crud.u import update_solution
 from crud.d import delete_solution
@@ -87,7 +88,10 @@ def main(event):
             elif method == "POST":
                 user_type, user = secured_user(event)
                 if not isinstance(user, dict):
-                    endpoint = create_solution(event, user, user_type)
+                    body_str = event.get('http', {}).get('body', "{}")
+                    body_dict = json.loads(body_str)
+                    
+                    endpoint = create_solution_template_explore_groups(user, user_type, body_dict)
                     return {
                         "body": endpoint, 
                         "statusCode": endpoint['statusCode'], 
