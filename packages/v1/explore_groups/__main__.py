@@ -51,7 +51,7 @@ def main(event):
                 user_type, user = secured_user(event)
                 if not isinstance(user, dict):
                     filters = None
-                    if 'filters' in event and isinstance(event['filters'], dict):
+                    if 'filters' in event.keys() and isinstance(event['filters'], dict):
                         filters = event['filters']
                         print("filters found")
                     if public_id is None:
