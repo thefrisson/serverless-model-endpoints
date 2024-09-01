@@ -83,7 +83,7 @@ def create_solution(event, user, user_type):
         print("Failed to create Solution:", str(e))
         return {'success': False, "body": "Internal Server Error", "statusCode": 500}
 
-def create_solution_template_explore_groups(event, user, user_type, body_dict, object_user_type, filters=None):
+def create_solution_template_explore_groups(user, user_type, object_user_type, body_dict):
     try:
         if user_type not in ['customer', 'admin', 'system_admin']:
             return {
@@ -92,11 +92,12 @@ def create_solution_template_explore_groups(event, user, user_type, body_dict, o
             }
         else:
 
+            object_user_id = body_dict.get(f'{object_user_type}_id', None)
             title = body_dict.get('title', None)
             description = body_dict.get('description', None)
 
             
-            if any(var is None for var in [title, description]):
+            if any(var is None for var in [object_user_id, title, description]):
                 return {
                     "error": "Incorrect Parameters",
                     "statusCode": 400,
@@ -123,7 +124,7 @@ def create_solution_template_explore_groups(event, user, user_type, body_dict, o
 
                 new_explore_group = insert_into_table(f'{object_user_type}_solution_template_generic_group', [f'{object_user_type}_solution_template_generic_group_id'],
                     {
-                        f'{object_user_type}_id': safe_getattr(user, f"{object_user_type}_id"),
+                        f'{object_user_type}_id': object_user_id,
                         'title': title,
                         'description': description,
                         'log_json': json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': f"was created"}])
