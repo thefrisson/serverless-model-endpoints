@@ -92,7 +92,7 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
             }
         else:
             print(body_dict)
-            object_user_id = body_dict.get(f'{object_user_type}_id', None)
+            object_user_id = body_dict.get(f'{object_user_type if object_user_type != "system" else "system_admin"}_id', None)
             title = body_dict.get('title', None)
             description = body_dict.get('description', None)
 
