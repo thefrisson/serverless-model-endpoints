@@ -28,14 +28,16 @@ def list_solutions(user, user_type):
         return {"body": "Unauthorized or invalid user type", "statusCode": 401}
 
 
-def retrieve_solution(user, user_type, public_id):
-    if user_type in ['customer', 'admin', 'affiliate', 'system_admin', 'end_user']:
+def list_solution_template_explore_groups(user, user_type, object_user_type, filters=None):
+    if (user_type == "system_admin" and object_user_type in ['customer', 'admin', 'affiliate', 'system', 'end_user']) or (user_type == "admin" and object_user_type in ['customer', 'admin', 'affiliate', 'end_user']) or (user_type == "customer" and object_user_type in ['customer', 'affiliate', 'end_user']) or (user_type == "affiliate" and object_user_type in ['affiliate', 'end_user']) or (user_type == "end_user" and object_user_type in ['end_user']):
         try:
-            table_name = f"solution"
-            
-            solution = row_to_dict(select_from_table(table_name, filters={'public_id': public_id}, return_type="first_or_404"))
+            table_name = f"{object_user_type}_solution_template_explore_group"
+            if filters is None:
+                explore_groups = row_to_dict(select_from_table(table_name))
+            else:
+                explore_groups = row_to_dict(select_from_table(table_name, filters=filters))
 
-            formatted_result = {'type': "solution", 'data': solution, "statusCode": 200}
+            formatted_result = {'type': "explore_group_list", 'data': explore_groups, "statusCode": 200}
             # Ensure fetching results first
             return formatted_result
         except Exception as e:
