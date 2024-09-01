@@ -13,12 +13,18 @@ def main(event):
     print('path list: ', path_list)
 
     is_valid_request = False
+    
+    group_type = None
+    object_user_type = None
+    public_id = None
 
     group_type = path_list[0]
     if group_type in ['solution_templates', 'external_account_types']:
         object_user_type = path_list[1]
         if object_user_type in ['system', 'admin', 'customer']:
             is_valid_request = True
+            public_id = path_list[2]
+
         
     print("Valid Request: ", is_valid_request)
     if not is_valid_request:
@@ -43,9 +49,12 @@ def main(event):
             if method == "GET":
                 user_type, user = secured_user(event)
                 if not isinstance(user, dict):
-                    if len(path_list) > 0:
-                            
-                        endpoint = list_solution_template_explore_groups(user, user_type, object_user_type)
+                    filters = None
+                    if 'filters' in event and isinstance(event['filters'], dict):
+                        filters = event['filters']
+                        print("filters found")
+                    if public_id is None:
+                        endpoint = list_solution_template_explore_groups(user, user_type, object_user_type, filters=filters)
                         return {
                             "body": endpoint, 
                             "statusCode": endpoint['statusCode'], 
