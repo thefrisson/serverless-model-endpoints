@@ -66,43 +66,7 @@ packages:
           parameters: {}
           environment: {}
           annotations: {}
-          limits: {}
-        - name: users_solutions
-          binary: false
-          main: ""
-          runtime: python:default
-          web: true
-          parameters: {}
-          environment: {}
-          annotations: {}
-          limits: {}
-        - name: teams_solutions
-          binary: false
-          main: ""
-          runtime: python:default
-          web: true
-          parameters: {}
-          environment: {}
-          annotations: {}
-          limits: {}
-        - name: vector_stores
-          binary: false
-          main: ""
-          runtime: python:default
-          web: true
-          parameters: {}
-          environment: {}
-          annotations: {}
-          limits: {}
-        - name: workflows
-          binary: false
-          main: ""
-          runtime: python:default
-          web: true
-          parameters: {}
-          environment: {}
-          annotations: {}
-          limits: {}
+          limits: {}    
         - name: workflow_templates
           binary: false
           main: ""
