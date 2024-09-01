@@ -125,10 +125,9 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
 
                 new_explore_group = insert_into_table(f'{object_user_type}_solution_template_generic_group', [f'{object_user_type}_solution_template_generic_group_id'],
                     {
-                        f'{object_user_type}_id': object_user_id,
+                        f'{object_user_type if object_user_type != "system" else "system_admin"}_id': object_user_id,
                         'title': title,
                         'description': description,
-                        'log_json': json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': f"was created"}])
                     }                        
                 )
                 print("new explore group: ", new_explore_group)
