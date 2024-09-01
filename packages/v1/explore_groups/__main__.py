@@ -23,7 +23,8 @@ def main(event):
         object_user_type = path_list[1]
         if object_user_type in ['system', 'admin', 'customer']:
             is_valid_request = True
-            public_id = path_list[2]
+            if len(path_list) == 3:
+                public_id = path_list[2]
 
         
     print("Valid Request: ", is_valid_request)
