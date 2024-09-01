@@ -7,9 +7,10 @@ from crud.d import delete_solution
 
 
 def main(event):
+
     method = event['http']['method']
     print(method)
-    
+    print(event)
     path_list = path_to_list(event['http']['path'])
     print('path list: ', path_list)
 
