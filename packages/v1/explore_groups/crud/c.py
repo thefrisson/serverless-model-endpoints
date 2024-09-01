@@ -123,7 +123,7 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
 
                 print("all objects selected")
                 object_user_type_key = f'{object_user_type if object_user_type != "system" else "system_admin"}_id'
-                new_explore_group = insert_into_table(f'{object_user_type}_solution_template_explore_group', [f'{object_user_type}_solution_template_generic_group_id'],
+                new_explore_group = insert_into_table(f'{object_user_type}_solution_template_explore_group', [f'{object_user_type}_solution_template_explore_group_id'],
                     {
                         object_user_type_key: object_user_id,
                         'title': title,
