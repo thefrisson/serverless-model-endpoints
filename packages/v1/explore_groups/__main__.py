@@ -7,10 +7,9 @@ from crud.d import delete_solution
 
 
 def main(event):
-
     method = event['http']['method']
     print(method)
-    print(event)
+
     path_list = path_to_list(event['http']['path'])
     print('path list: ', path_list)
 
@@ -25,6 +24,7 @@ def main(event):
         object_user_type = path_list[1]
         if object_user_type in ['system', 'admin', 'customer']:
             is_valid_request = True
+
             if len(path_list) == 3:
                 public_id = path_list[2]
 
