@@ -98,6 +98,7 @@ def create_solution_template_explore_groups(user, user_type, object_user_type, b
 
             
             if any(var is None for var in [object_user_id, title, description]):
+                print("body dictionary keys: ", body_dict.keys())
                 return {
                     "error": "Incorrect Parameters",
                     "statusCode": 400,
