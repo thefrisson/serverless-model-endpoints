@@ -33,7 +33,7 @@ def secured_user(event):
         print("user_type: " + user_type)
         print(f"{user_type}_id: " + user_id)
 
-        if user_type in ['customer', 'admin', 'affiliate', 'system']:
+        if user_type in ['customer', 'admin', 'affiliate', 'system_admin']:
             try:
                 # Safely construct the query using fixed table and column names as appropriate
                 table_name = f"{user_type}"
