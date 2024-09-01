@@ -92,7 +92,7 @@ def main(event):
                     body_str = event.get('http', {}).get('body', "{}")
                     body_dict = json.loads(body_str)
                     
-                    endpoint = create_solution_template_explore_groups(user, user_type, body_dict)
+                    endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, body_dict)
                     return {
                         "body": endpoint, 
                         "statusCode": endpoint['statusCode'], 
