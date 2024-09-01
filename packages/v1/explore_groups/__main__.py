@@ -90,7 +90,8 @@ def main(event):
             elif method == "POST":
                 user_type, user = secured_user(event)
                 if not isinstance(user, dict):
-                    body_str = event.get('http', {}).get('body', "{}")
+                    print()
+                    body_str = event.get('body', "{}")
                     body_dict = json.loads(body_str)
                     
                     endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, body_dict)
