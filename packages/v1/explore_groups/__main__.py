@@ -92,10 +92,10 @@ def main(event):
                 if not isinstance(user, dict):
                     print("event: ", event)
 
-                    body_str = event.get('http', "{}")
-                    body_dict = json.loads(body_str)
+                    request_dict = event.get('http', "{}")
+
                     
-                    endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, body_dict)
+                    endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, request_dict)
                     return {
                         "body": endpoint, 
                         "statusCode": endpoint['statusCode'], 
