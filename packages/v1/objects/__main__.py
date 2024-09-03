@@ -5,6 +5,7 @@ from crud.r import list_solutions, list_solution_template_explore_groups
 from crud.u import update_solution
 from crud.d import delete_solution
 
+
 def main(event):
     method = event['http']['method']
     print(method)

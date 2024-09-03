@@ -1,7 +1,5 @@
 import json
 import os
-from google.cloud import secretmanager
-from google.oauth2 import service_account
 from context.context import select_from_table, safe_getattr, row_to_dict
 
 
@@ -52,32 +50,3 @@ def retrieve_solution(user, user_type, public_id):
 
 
 
-def retrieve_secret_value(secret_key):
-    # Fetch the secret reference from the database
-    
-    # Get the service account JSON from environment variables
-    service_account_info = json.loads(os.environ.get('GOOGLE_APPLICATION_CREDENTIALS_JSON'))
-    
-    # Authenticate using the service account JSON key
-    credentials = service_account.Credentials.from_service_account_info(service_account_info)
-    
-    # Initialize the Secret Manager client with the credentials
-    client = secretmanager.SecretManagerServiceClient(credentials=credentials)
-
-    # Construct the name of the secret
-    secret_name = f"projects/orangeisbetter-general/secrets/{secret_key}/versions/latest"
-
-    # Access the secret
-    try:
-        response = client.access_secret_version(request={"name": secret_name})
-        secret_value = response.payload.data.decode("UTF-8")
-        return {
-            "statusCode": 200,
-            "body": secret_value  # Ensure sensitive data is handled securely
-        }
-    except Exception as e:
-        print(f"Error retrieving secret: {e}")
-        return {
-            "statusCode": 500,
-            "body": f"Error retrieving secret: {str(e)}"
-        }

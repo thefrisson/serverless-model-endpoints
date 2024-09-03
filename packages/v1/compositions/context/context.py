@@ -195,59 +195,54 @@ def select_from_table(table_name, user=None, user_type=None, filters=None, retur
 
 def insert_into_table(table_name, generate_uuid_list, parameters):
     try:
-
+        # Load the table metadata dynamically
         table = Table(table_name, metadata, autoload_with=engine)
-        
-        # Retrieve column names from the table
+
+        # Retrieve valid column names from the table
         columns = {column.name for column in table.columns}
-        
+
+        # Generate UUIDs for specified columns
         for uuid_key in generate_uuid_list:
             parameters[uuid_key] = str(uuid.uuid4())
 
-        # Check for specific columns and add default values if they are missing
-        if 'log_json' in columns and 'log_json' not in parameters:
-            parameters['log_json'] = json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': f"was created"}])
-        
-        if 'public_id' in columns and 'public_id' not in parameters:
-            parameters['public_id'] = str(uuid.uuid4())
+        # Provide default values for missing columns
+        default_values = {
+            'log_json': json.dumps([{'time': dt.utcnow().strftime("%B %-d, %Y %H:%M:%S"), 'action_type': "create", 'action': "was created"}]),
+            'public_id': str(uuid.uuid4()),
+            'created_timestamp': dt.utcnow(),
+            'last_updated_timestamp': dt.utcnow(),
+            'status': os.environ.get('ACTIVE_STATUS'),
+        }
 
-        if 'created_timestamp' in columns and 'created_timestamp' not in parameters:
-            parameters['created_timestamp'] = dt.utcnow()
+        for col in default_values:
+            if col in columns and col not in parameters:
+                parameters[col] = default_values[col]
 
-        if 'last_updated_timestamp' in columns and 'last_updated_timestamp' not in parameters:
-            parameters['last_updated_timestamp'] = dt.utcnow()
+        # Filter parameters to keep only valid columns for insertion
+        valid_parameters = {k: v for k, v in parameters.items() if k in columns}
 
-        if 'status' in columns and 'status' not in parameters:
-            parameters['status'] = os.environ.get('ACTIVE_STATUS')
-
-        print(type(parameters))
+        # Identify any unconsumed columns (if any)
+        unconsumed_columns = set(parameters.keys()) - set(valid_parameters.keys())
+        if unconsumed_columns:
+            print(f"Unconsumed column names: {', '.join(unconsumed_columns)}")
+            raise ValueError(f"Unconsumed column names: {', '.join(unconsumed_columns)}")
 
         # Perform the insert operation
-
-        insert_stmt = insert(table).values(**parameters)
-        print(insert_stmt)
+        insert_stmt = insert(table).values(**valid_parameters)
         result = session.execute(insert_stmt)
-        print(result)
         session.commit()
-        print("committed to db")
 
+        # Retrieve the primary key value of the inserted row
         primary_key_value = result.inserted_primary_key[0]
-        print("Primary key of the inserted row:", primary_key_value)
-
-        # Option 1: Fetch the inserted row using a raw SQL query (if you have the primary key column name)
         select_stmt = text(f"SELECT * FROM {table_name} WHERE id = :pk")
         inserted_row = session.execute(select_stmt, {'pk': primary_key_value}).fetchone()
-        print("Inserted row:", inserted_row)
-        print('result type of insert', type(inserted_row))
 
         return inserted_row
-            
+
     except Exception as e:
         session.rollback()
         print(e)
         return {'body': f"Failed to insert into {table_name}: {str(e)}", 'statusCode': 400}
-
-
 
 def update_table(table_name, key_column, key_value, update_data):
     try:
