@@ -40,7 +40,16 @@ packages:
             GOOGLE_APPLICATION_CREDENTIALS_JSON: "${GOOGLE_APPLICATION_CREDENTIALS_JSON}"          }
           annotations: {}
           limits: {}
-        - name: solutions
+        - name: objects
+          binary: false
+          main: ""
+          runtime: python:default
+          web: true
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
+        - name: compositions
           binary: false
           main: ""
           runtime: python:default
