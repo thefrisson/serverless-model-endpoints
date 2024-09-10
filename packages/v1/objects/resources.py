@@ -6,6 +6,6 @@ valid_objects = [
 
 objects_a = ['external_account_type_generic_groups_explore_groups', 'solution_template_generic_groups_explore_groups', 'users_stripe_passports']
 
-objects_b = ['solution_templates_workflow_templates']
+objects_b = ['passports', 'solution_templates_workflow_templates']
 
-context_map = []
+context_map = {'passports': {'admin': "admin_stripe_passport", 'customer': "customer_stripe_passport", 'affiliate': "affiliate_stripe_passport"}}
