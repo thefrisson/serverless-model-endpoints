@@ -1,6 +1,6 @@
 from context.context import select_from_table, safe_getattr, row_to_dict
-from context.scope import get_scoping_object
-from resources import valid_objects, objects_a, objects_b, context_map
+from scopes.scope import get_scoping_object
+from resources.resources import valid_objects, objects_a, objects_b, context_map
 
 
 def list_objects(user, user_type, obj, object_user_type, filters=None):

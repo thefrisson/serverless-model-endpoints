@@ -4,7 +4,7 @@ from crud.c import create_solution_template_explore_groups
 from crud.r import list_objects
 from crud.u import update_solution
 from crud.d import delete_solution
-from .resources import valid_objects
+from resources.resources import valid_objects
 
 
 def main(event):

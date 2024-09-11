@@ -1,8 +1,7 @@
 import os
 import json
 import requests
-from .context import safe_getattr
-from resources import context_map
+from context.context import safe_getattr
 
 def get_scoping_object(user, user_type, scoping_table_name):
     resp = requests.get(
