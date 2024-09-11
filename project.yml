@@ -16,7 +16,9 @@ packages:
         ACTIVE_STATUS: ${ACTIVE_STATUS},
         CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME},
         CLOUDINARY_API_KEY: "${CLOUDINARY_API_KEY}",
-        CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+        CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET},
+        TEMBO_DATA_DOMAIN: ${TEMBO_DATA_DOMAIN},
+        TEMBO_TOKEN: ${TEMBO_TOKEN}
       }
       parameters: {}
       annotations: {}
@@ -36,8 +38,7 @@ packages:
           runtime: python:default
           web: true
           parameters: {}
-          environment: {
-            GOOGLE_APPLICATION_CREDENTIALS_JSON: "${GOOGLE_APPLICATION_CREDENTIALS_JSON}"          }
+          environment: {}
           annotations: {}
           limits: {}
         - name: objects
