@@ -18,7 +18,7 @@ def list_objects(user, user_type, obj, object_user_type, filters=None):
                     else:
                         objects = row_to_dict(select_from_table(table_name, filters=filters))
                     
-                    formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
+                    formatted_result = {'type': obj, 'data': objects, 'statusCode': 200}
                     # Ensure fetching results first
                     return formatted_result
 
@@ -36,12 +36,12 @@ def list_objects(user, user_type, obj, object_user_type, filters=None):
                             object_iter = row_to_dict(select_from_table(table_name, filters=filters))
                             objects.append(object_iter)
                         
-                        if table_name is not None:
-                            formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
-                            # Ensure fetching results first
-                            return formatted_result
-                        else:
-                            return {'type': "error", 'error': "Not a Valid Object or similar error for tembo object.", 'statusCode': 400}
+                    if table_name is not None:
+                        formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
+                        # Ensure fetching results first
+                        return formatted_result
+                    else:
+                        return {'type': "error", 'error': "Not a Valid Object or similar error for tembo object.", 'statusCode': 400}
                 else:
                     return {'type': "error", 'error': "Not a 3.", 'statusCode': 400}
             else:

@@ -6,7 +6,7 @@ valid_objects = [
 
 objects_a = ['external_account_type_generic_groups_explore_groups', 'solution_template_generic_groups_explore_groups', 'users_stripe_passports']
 
-objects_b = ['passports', 'solution_templates_workflow_templates']
+objects_b = ['passport', 'solution_templates_workflow_templates']
 
 context_map = {
     'passports': {'admin': {'tablename': "admin_stripe_passport", 'scope_objects': {'admin': {'tablename': "admins_stripe_passports", 'input': 'admin_id', 'output': "stripe_passport_id", 'output_relates_to': "admin_passport_id"}}},
