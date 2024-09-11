@@ -16,12 +16,12 @@ def main(event):
 
     is_valid_request = False
     
-    group_type = None
+    obj = None
     object_user_type = None
     public_id = None
 
-    group_type = path_list[0]
-    if group_type in valid_objects:
+    obj = path_list[0]
+    if obj in valid_objects:
         object_user_type = path_list[1]
         if object_user_type in ['system', 'admin', 'customer']:
             is_valid_request = True
@@ -58,7 +58,7 @@ def main(event):
                     filters = event['filters']
                     print("filters found")
                 if public_id is None:
-                    endpoint = list_objects(user, user_type, object_user_type, filters=filters)
+                    endpoint = list_objects(user, user_type, obj, object_user_type, filters=filters)
                     return {
                         "body": endpoint, 
                         "statusCode": endpoint['statusCode'], 
