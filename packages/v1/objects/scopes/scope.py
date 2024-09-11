@@ -8,7 +8,7 @@ def get_scoping_object(user, user_type, scoping_table_name):
         url=f"https://{os.environ.get('TEMBO_DATA_DOMAIN')}/restapi/v1/dev.{scoping_table_name}",
         headers={"Authorization": f"Bearer {os.environ.get('TEMBO_TOKEN')}"},
         params={
-            f'{user_type}_id': safe_getattr(user, f"{user_type}_id")
+            f'{user_type}_id': f"eq.{safe_getattr(user, f"{user_type}_id")}"
         }
     )
 
