@@ -1,6 +1,6 @@
 from context.context import select_from_table, safe_getattr, row_to_dict
+from context.scope import get_scoping_object
 from resources import valid_objects, objects_a, objects_b, context_map
-
 
 
 def list_objects(user, user_type, obj, object_user_type, filters=None):
@@ -14,19 +14,35 @@ def list_objects(user, user_type, obj, object_user_type, filters=None):
 
                 if pre_table_name in objects_a:
                     table_name = f"{object_user_type}_{obj}"
-                elif pre_table_name in objects_b:
-                    table_name = context_map[obj][object_user_type]
-            if table_name is not None:
-                if filters is None:
-                    objects = row_to_dict(select_from_table(table_name))
-                else:
-                    objects = row_to_dict(select_from_table(table_name, filters=filters))
+                    if filters is None:
+                        objects = row_to_dict(select_from_table(table_name))
+                    else:
+                        objects = row_to_dict(select_from_table(table_name, filters=filters))
+                    
+                    formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
+                    # Ensure fetching results first
+                    return formatted_result
+
                 
-                formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
-                # Ensure fetching results first
-                return formatted_result
-            else:
-                return {'type': "error", 'error': "Not a Valid Object or similar error.", 'statusCode': 400}
+            elif pre_table_name in objects_b:
+                print("objects_b")
+                if filters is None:
+                    filters = {}
+                scopes_list = get_scoping_object(user, user_type, context_map[obj][object_user_type]['scope_objects'][user_type]['tablename'])
+                objects = []
+                for scope_object in scopes_list:
+                    if context_map[obj][object_user_type]['scope_objects'][user_type]['output'] in scope_object.keys():
+                        table_name = context_map[obj][object_user_type]['tablename']
+
+                        object_iter = row_to_dict(select_from_table(table_name, filters=filters))
+                        objects.append(object_iter)
+                    
+                    if table_name is not None:
+                        formatted_result = {'type': obj, 'data': objects, "statusCode": 200}
+                        # Ensure fetching results first
+                        return formatted_result
+                    else:
+                        return {'type': "error", 'error': "Not a Valid Object or similar error for tembo object.", 'statusCode': 400}
 
         except Exception as e:
             print("Retrieving failed:", str(e))
