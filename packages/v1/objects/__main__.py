@@ -1,9 +1,9 @@
 import json
 from context.context import secured_user, path_to_list, is_valid_uuid
-# from crud.c import create_solution_template_explore_groups
+from crud.c import create_solution_template_explore_groups
 from crud.r import list_objects
-# from crud.u import update_solution
-# from crud.d import delete_solution
+from crud.u import update_solution
+from crud.d import delete_solution
 from resources.resources import valid_objects
 
 
@@ -54,7 +54,7 @@ def main(event):
             user_type, user = secured_user(event)
             if not isinstance(user, dict):
                 filters = None
-                if 'filters' in event and isinstance(event['filters'], dict):
+                if 'filters' in event.keys() and isinstance(event['filters'], dict):
                     filters = event['filters']
                     print("filters found")
                 if public_id is None:
@@ -91,16 +91,15 @@ def main(event):
         elif method == "POST":
             user_type, user = secured_user(event)
             if not isinstance(user, dict):
-                # request_dict = event.get('body', {})
-                # endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, request_dict)
-                # return {
-                #     "body": endpoint, 
-                #     "statusCode": endpoint['statusCode'], 
-                #     "headers": {
-                #         'Access-Control-Allow-Credentials': 'true',
-                #     }
-                # }
-                pass
+                request_dict = event.get('body', {})
+                endpoint = create_solution_template_explore_groups(user, user_type, object_user_type, request_dict)
+                return {
+                    "body": endpoint, 
+                    "statusCode": endpoint['statusCode'], 
+                    "headers": {
+                        'Access-Control-Allow-Credentials': 'true',
+                    }
+                }
                 
             else:
                 return {
@@ -125,15 +124,14 @@ def main(event):
             user_type, user = secured_user(event)
             if not isinstance(user, dict):
 
-                # endpoint = update_solution(user, user_type)
-                # return {
-                #     "body": endpoint, 
-                #     "statusCode": endpoint['statusCode'], 
-                #     "headers": {
-                #         'Access-Control-Allow-Credentials': 'true',
-                #     }
-                # }
-                pass
+                endpoint = update_solution(user, user_type)
+                return {
+                    "body": endpoint, 
+                    "statusCode": endpoint['statusCode'], 
+                    "headers": {
+                        'Access-Control-Allow-Credentials': 'true',
+                    }
+                }
             
         elif method == "DELETE":
             if not path_list or not is_valid_uuid(path_list[0]):
@@ -149,13 +147,12 @@ def main(event):
             user_type, user = secured_user(event)
             if not isinstance(user, dict):
 
-                # endpoint = delete_solution(user, user_type)
-                # return {
-                #     "body": endpoint, 
-                #     "statusCode": endpoint['statusCode'], 
-                #     "headers": {
-                #         'Access-Control-Allow-Credentials': 'true',
-                #         'Content-Type': "application/json"
-                #     }
-                # }
-                pass
+                endpoint = delete_solution(user, user_type)
+                return {
+                    "body": endpoint, 
+                    "statusCode": endpoint['statusCode'], 
+                    "headers": {
+                        'Access-Control-Allow-Credentials': 'true',
+                        'Content-Type': "application/json"
+                    }
+                }

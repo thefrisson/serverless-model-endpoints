@@ -11,6 +11,6 @@ objects_b = ['passport', 'solution_templates_workflow_templates']
 context_map = {
     'passports': {'admin': {'tablename': "admin_stripe_passport", 'scope_objects': {'admin': {'tablename': "admins_stripe_passports", 'input': 'admin_id', 'output': "stripe_passport_id", 'output_relates_to': "admin_passport_id"}}},
                             'customer': {'tablename': "customer_stripe_passport", 'scope_objects': {'customer': {'tablename': "customers_stripe_passports", 'input': 'customer_id', 'output': "stripe_passport_id", 'output_relates_to': "customer_passport_id"}}},
-                            'affiliate': {'tablename': "affiliate_stripe_passport", 'scope_objects': {'affiliate': {'tablename': "affiliates_stripe_passports", 'input': 'affiliate_id', 'output': "stripe_passport_id", 'output_relates_to': "affiliate_passport_id"}}}},
+                            'affiliate': {'tablename': "affiliate_stripe_passport", 'scope_objects': {'affiliate': {'tablename': "affiliates_stripe_passports", 'input': 'affiliate_id', 'output': "stripe_passport_id", 'output_relates_to': "affiliate_passport_id"}}}}
                 
 }
