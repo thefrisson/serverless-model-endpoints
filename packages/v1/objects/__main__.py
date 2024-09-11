@@ -58,6 +58,7 @@ def main(event):
                     filters = event['filters']
                     print("filters found")
                 if public_id is None:
+                    print("made it to list_objects")
                     endpoint = list_objects(user, user_type, obj, object_user_type, filters=filters)
                     return {
                         "body": endpoint, 
